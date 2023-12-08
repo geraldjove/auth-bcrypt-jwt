@@ -28,6 +28,7 @@ db.once('open', ()=>{
 });
 
 //Connect routers
+// Connect route for userRouter
 app.use('/users', userRouter);
 // M2-M3: Add and group all course routes in the index.js
 app.use('/courses', courseRoutes);
