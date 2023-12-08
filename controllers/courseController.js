@@ -3,11 +3,13 @@ const Course = require('../models/Course');
 
 // M2-M3: create a getAllCourses controller.
 module.exports.getAllCourse = (req, res) =>{
+    // returns and finds all documents.
     return Course.find({})
     .then((courses)=>{
         if(!courses){
             return res.send('No courses found or invalid query');
         } else {
+            // return and print the courses to the client.
             return res.send({courses});
         }
     })
@@ -18,11 +20,13 @@ module.exports.getAllCourse = (req, res) =>{
 }
 
 module.exports.getCourse = (req,res) => {
+    // returns and finds the matching id.
     return Course.findOne({_id: req.params.courseId})
     .then((course)=>{
         if(!course){
             return res.send('Error no course found');
         } else {
+            // returns and print the matching course to the client.
             return res.send({course});
         }
     })
@@ -36,14 +40,15 @@ module.exports.getCourse = (req,res) => {
 module.exports.addCourse = (req, res )=>{
     // M4: Receives detalils of the course from the course body
     const { name, description, price, isActive, createdOn } = req.body;
-    // Checks if the course is already existing
+    // Checks and finds if the course is already existing
     return Course.findOne({name: name})
     .then((result)=>{
-        // if result is true, duplicated course errror
+        // if result is true, duplicated course error
         if (result){
             return res.send('Duplicated course name found');
             // if result is false, proceed to create a new course.
         } else {
+            // new course model using Course Schema
             let newCourse = new Course({
                 name: name,
                 description: description,

@@ -1,7 +1,11 @@
+
+//CREATING MODELS: ALWAYS REMEMBER STRUCTURE: SCHEMA THEN MODEL!
+
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema; //assign Schema variable for mongoose.Schema (schematics/blueprint)
 
+// create a new Schema and assign it to a variable (userController).
 const userController = new Schema({
     firstName: {
         type: String,
@@ -29,4 +33,4 @@ const userController = new Schema({
     },
 })
 
-module.exports = mongoose.model('User', userController);
+module.exports = mongoose.model('User', userController); //exports model so it can be used by other modules.

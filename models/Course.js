@@ -1,5 +1,8 @@
+//CREATING MODELS: ALWAYS REMEMBER STRUCTURE: SCHEMA THEN MODEL!
+
 const mongoose = require('mongoose');
 
+// create a new Schema and assign it to a variable (courseShema).
 const courseSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -23,4 +26,4 @@ const courseSchema = new mongoose.Schema({
 	}
 })
 
-module.exports = mongoose.model("Course", courseSchema);
+module.exports = mongoose.model("Course", courseSchema); //exports model so it can be used by other modules.
