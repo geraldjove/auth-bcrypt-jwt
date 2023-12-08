@@ -15,5 +15,5 @@ router.post('//', verifyToken, verifyAdmin, courseController.addCourse);
 // routes into a specific user id and then uses the getCourse function inside courseController.
 router.post('/:courseId', courseController.getCourse);
 
-// exports router (express.Router()) so it can be used by other modules.
+// exports router so it can be used by other modules.
 module.exports = router;
