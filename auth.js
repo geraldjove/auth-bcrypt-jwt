@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const secret = "MalinoCourseBookingAPI";
+const secret = ""; //Add secret key
 
 module.exports.createAccessToken = (user) => {
 	// payload
