@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const enrollmentSchema = new mongoose.Schema({
 	// fields to collect
 	// fields' rules
+	userId: {
+		type: String,
+		required: [true, "User ID is Required"]
+	},
 	enrolledCourses: [
 		{
 			courseId:{

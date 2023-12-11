@@ -1,36 +1,48 @@
+//[Section] Activity
+		const mongoose = require('mongoose');
 
-//CREATING MODELS: ALWAYS REMEMBER STRUCTURE: SCHEMA THEN MODEL!
+		const userSchema = new mongoose.Schema({
+			
+			firstName: {
+				type: String,
+				required: [true, 'First Name is Required']
+			},
+			lastName: {
+				type: String,
+				required: [true, 'Last Name is Required']
+			},
+			email: {
+				type: String,
+				required: [true, 'Email is Required'],
+				validate: {
+					validator: function(value) {
+						// Use a regular expression to check if the email contains "@" symbol
+						return /\@/.test(value);
+					},
+					message: 'Email must contain the "@" symbol'
+				}
+			},
+			password: {
+				type: String,
+				required: [true, 'Password is Required'],
+				minlength: [8, 'Password must be at least 8 characters long']
+			},
+			isAdmin: {
+				type: Boolean,
+				default: false
+			},
+			mobileNo: {
+				type: String,
+				required: [true, 'Mobile Number is Required'],
+				validate: {
+					validator: function(value) {
+						// Use a regular expression to check if the mobileNo is exactly 11 characters long
+						return /^\d{11}$/.test(value);
+					},
+					message: 'Mobile Number must be exactly 11 digits long'
+				}
+			}
+		});
 
-const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema; //assign Schema variable for mongoose.Schema (schematics/blueprint)
-
-// create a new Schema and assign it to a variable (userController).
-const userController = new Schema({
-    firstName: {
-        type: String,
-        required: [true, "Required first name"]
-    },
-    lastName: {
-        type: String,
-        required: [true, "Required last name"]
-    },
-    email: {
-        type: String,
-        required: [true, "Required email"]
-    },
-    password: {
-        type: String,
-        required: [true, "Required password"]
-    },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
-    mobileNo: {
-        type: String,
-        required: [true, "Required mobile number"]
-    },
-})
-
-module.exports = mongoose.model('User', userController); //exports model so it can be used by other modules.
+		module.exports = mongoose.model('User', userSchema);

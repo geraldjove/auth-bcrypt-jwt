@@ -1,37 +1,43 @@
-const express = require('express'); // add express making it easier to build web applications and APIs
-const mongoose = require('mongoose'); //add mongoose used for connecting working with MongoDB
-const app = express(); //initiate express
-const cors = require('cors'); //cross-origin resource sharing
-const userRouter = require('./routes/userRoutes') //M2-M3: Connect to userRouter.js
-const courseRoutes = require('./routes/courseRoutes') //M2-M3: Connect to courseRouter.js
-require('dotenv').config(); //use hidden environment variables (PORT, SECRET KEY, MONGO_URI). PLS REMOVE IF IT IS NOT YOUR PREFERENCE.
+// This will file serve as an entry point for the application
+
+// Dependency
+// Include the module / packages to be used in the application
+const express = require("express");
+const mongoose = require("mongoose");
+const userRoutes = require("./routes/user");
+const courseRoutes = require("./routes/course");
+const bcrypt = require("bcrypt");
+
+// Environment setup
+const port = 4000;
+
+// Cross Origin Resource Sharing
+// Enables our server to be accesed by any frontend application even with different domain
+const cors = require("cors");
+const app = express();
 
 // Middlewares
-app.use(express.json()); //parses income JSON data payloads. Checking for headers such as Content-Type : application/json
-app.use(express.urlencoded({extended: true})); //parses and handles URL forms (HTML Forms)
-app.use(cors()); //cross-origin resource sharing. CORS is a security feature implemented by web browsers that restricts web pages from making requests to a domain different from the one that served the web page.
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-// connect to mongoDB connection string
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(
+  "mongodb+srv://admin:admin@b335-jove.pfdomvi.mongodb.net/s41-s49-activity",
+  {
+    useNewUrlParser: true, // For parsing/reading connection string
+    useUnifiedTopology: true, // Assures that our application uses mongodb latest servers when connecting with mongo database
+  }
+);
+mongoose.connection.once("open", () =>
+  console.log("Now connected to MongoDB Atlas")
+);
 
-// initiate connection
-let db = mongoose.connection;
+app.use("/users", userRoutes);
+app.use("/courses", courseRoutes);
 
-// event listener that checks for error during connection
-db.on('error', (error)=>{console.log('Error listening to port ', error)});
-
-// one time event listener that checks and initiate port connection/listening
-db.once('open', ()=>{
-    app.listen(process.env.PORT, ()=>{
-        console.log('Successfully listening to port ', process.env.PORT);
-    })
+// process.env.PORT - online environement port
+app.listen(process.env.PORT || port, () => {
+  console.log(`API is now online on port ${process.env.PORT || port}`);
 });
 
-// MIDDLEWARE - Processing of Request, Response, Authentication, Authorization, Error Handling, and CORS
-
-//Connect routers
-// Connect route for userRouter. This is a middleware
-app.use('/users', userRouter);
-// M2-M3: Add and group all course routes in the index.js
-// Connect route for courseRoutes. This is a middleware
-app.use('/courses', courseRoutes);
+//
