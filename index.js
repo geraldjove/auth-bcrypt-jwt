@@ -21,8 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://admin:admin@b335-jove.pfdomvi.mongodb.net/s41-s49-activity",
+mongoose.connect("", // Add connection string
   {
     useNewUrlParser: true, // For parsing/reading connection string
     useUnifiedTopology: true, // Assures that our application uses mongodb latest servers when connecting with mongo database
